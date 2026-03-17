@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>開發工具箱</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>開發工具箱</h1>
+            <p class="subtitle">developer toolkit</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="unicode">Unicode 編碼/解碼</button>
+            <button class="tab-btn" data-tab="base64">Base64 編碼/解碼</button>
+            <button class="tab-btn" data-tab="urlencode">URL 編碼/解碼</button>
+        </nav>
+
+        <main>
+            <!-- Unicode Tool Tab -->
+            <section id="unicode" class="tab-content active">
+                <div class="tool-section">
+                    <div class="tool-header">
+                        <h2>Unicode 編碼/解碼</h2>
+                        <button id="layout-toggle-btn" class="layout-toggle" title="切換佈局">⇄</button>
+                    </div>
+                    
+                    <div class="tool-row">
+                        <div class="input-group">
+                            <div class="input-header">
+                                <label for="text-input">編碼前</label>
+                                <button id="copy-input-btn" class="btn-copy-small" title="複製">📋</button>
+                            </div>
+                            <textarea 
+                                id="text-input" 
+                                placeholder="輸入要轉換的文字或 Unicode 編碼..." 
+                                rows="10"
+                            ></textarea>
+                        </div>
+
+                        <div class="button-group">
+                            <button id="clear-all-btn" class="btn btn-secondary">清除全部</button>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-header">
+                                <label for="result-output">編碼後</label>
+                                <button id="copy-output-btn" class="btn-copy-small" title="複製">📋</button>
+                            </div>
+                            <textarea 
+                                id="result-output" 
+                                placeholder="轉換結果會顯示在這裡..." 
+                                rows="10"
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>使用說明</h3>
+                        <ul>
+                            <li><strong>編碼:</strong> 將文字轉換為 Unicode 編碼格式（\\uXXXX）</li>
+                            <li><strong>解碼:</strong> 將 Unicode 編碼轉換回文字</li>
+                            <li>支援所有 Unicode 字符</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Base64 Tool Tab -->
+            <section id="base64" class="tab-content">
+                <div class="tool-section">
+                    <div class="tool-header">
+                        <h2>Base64 編碼/解碼</h2>
+                        <button id="layout-toggle-btn-b64" class="layout-toggle" title="切換佈局">⇄</button>
+                    </div>
+                    
+                    <div class="tool-row">
+                        <div class="input-group">
+                            <div class="input-header">
+                                <label for="base64-input">編碼前</label>
+                                <button id="copy-base64-input-btn" class="btn-copy-small" title="複製">📋</button>
+                            </div>
+                            <textarea 
+                                id="base64-input" 
+                                placeholder="輸入要轉換的文字或 Base64 編碼..." 
+                                rows="10"
+                            ></textarea>
+                        </div>
+
+                        <div class="button-group">
+                            <button id="base64-clear-all-btn" class="btn btn-secondary">清除全部</button>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-header">
+                                <label for="base64-output">編碼後</label>
+                                <button id="copy-base64-output-btn" class="btn-copy-small" title="複製">📋</button>
+                            </div>
+                            <textarea 
+                                id="base64-output" 
+                                placeholder="轉換結果會顯示在這裡..." 
+                                rows="10"
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>使用說明</h3>
+                        <ul>
+                            <li><strong>編碼:</strong> 將文字轉換為 Base64 編碼格式</li>
+                            <li><strong>解碼:</strong> 將 Base64 編碼轉換回文字</li>
+                            <li>自動雙向轉換，支援中文和特殊字符</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- URL Encode Tool Tab -->
+            <section id="urlencode" class="tab-content">
+                <div class="tool-section">
+                    <div class="tool-header">
+                        <h2>URL 編碼/解碼</h2>
+                        <button id="layout-toggle-btn-url" class="layout-toggle" title="切換佈局">⇄</button>
+                    </div>
+                    
+                    <div class="tool-row">
+                        <div class="input-group">
+                            <div class="input-header">
+                                <label for="url-input">編碼前</label>
+                                <button id="copy-url-input-btn" class="btn-copy-small" title="複製">📋</button>
+                            </div>
+                            <textarea 
+                                id="url-input" 
+                                placeholder="輸入要轉換的文字或 URL 編碼..." 
+                                rows="10"
+                            ></textarea>
+                        </div>
+
+                        <div class="button-group">
+                            <button id="url-clear-all-btn" class="btn btn-secondary">清除全部</button>
+                        </div>
+
+                        <div class="input-group">
+                            <div class="input-header">
+                                <label for="url-output">編碼後</label>
+                                <button id="copy-url-output-btn" class="btn-copy-small" title="複製">📋</button>
+                            </div>
+                            <textarea 
+                                id="url-output" 
+                                placeholder="轉換結果會顯示在這裡..." 
+                                rows="10"
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>使用說明</h3>
+                        <ul>
+                            <li><strong>編碼:</strong> 將文字轉換為 URL 編碼格式（適用於 URL 參數）</li>
+                            <li><strong>解碼:</strong> 將 URL 編碼轉換回文字</li>
+                            <li>自動雙向轉換，支援中文和特殊字符</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Dev Toolbox. Keep coding! 💻</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
