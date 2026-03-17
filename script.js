@@ -18,35 +18,44 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 // ============================================
 // Layout toggle functionality - for individual tools
 // ============================================
-function initializeLayoutToggle(toggleBtnId, toolSectionId) {
+function initializeLayoutToggle(toggleBtnId, sectionId) {
     const layoutToggleBtn = document.getElementById(toggleBtnId);
-    const toolSection = document.getElementById(toolSectionId);
+    const section = document.getElementById(sectionId);
     
     // Skip if elements don't exist
-    if (!layoutToggleBtn || !toolSection) return;
+    if (!layoutToggleBtn || !section) return;
+    
+    // Get the tool-section div inside the section
+    const toolSection = section.querySelector('.tool-section');
+    if (!toolSection) return;
     
     // Load layout preference from localStorage
-    const savedLayout = localStorage.getItem(`toolLayout-${toolSectionId}`) || 'vertical';
+    const savedLayout = localStorage.getItem(`toolLayout-${sectionId}`) || 'vertical';
+    
+    // Update button icon function
+    function updateToggleButtonIcon(isHorizontal) {
+        layoutToggleBtn.textContent = isHorizontal ? '⇅' : '⇄';
+        layoutToggleBtn.title = isHorizontal ? '切換為垂直佈局' : '切換為水平佈局';
+    }
     
     // Apply saved layout on page load
     if (savedLayout === 'horizontal') {
         toolSection.classList.add('layout-horizontal');
-        updateToggleButtonIcon(layoutToggleBtn, true);
+        updateToggleButtonIcon(true);
+    } else {
+        updateToggleButtonIcon(false);
     }
     
-    function updateToggleButtonIcon(btn, isHorizontal) {
-        btn.textContent = isHorizontal ? '⇅' : '⇄';
-        btn.title = isHorizontal ? '切換為垂直佈局' : '切換為水平佈局';
-    }
-    
+    // Add click event listener
     layoutToggleBtn.addEventListener('click', () => {
         toolSection.classList.toggle('layout-horizontal');
         
         // Save preference
         const isHorizontal = toolSection.classList.contains('layout-horizontal');
-        localStorage.setItem(`toolLayout-${toolSectionId}`, isHorizontal ? 'horizontal' : 'vertical');
+        localStorage.setItem(`toolLayout-${sectionId}`, isHorizontal ? 'horizontal' : 'vertical');
         
-        updateToggleButtonIcon(layoutToggleBtn, isHorizontal);
+        // Update button icon
+        updateToggleButtonIcon(isHorizontal);
     });
 }
 
@@ -54,6 +63,7 @@ function initializeLayoutToggle(toggleBtnId, toolSectionId) {
 initializeLayoutToggle('layout-toggle-btn', 'unicode');
 initializeLayoutToggle('layout-toggle-btn-b64', 'base64');
 initializeLayoutToggle('layout-toggle-btn-url', 'urlencode');
+initializeLayoutToggle('layout-toggle-btn-json', 'json');
 
 // ============================================
 // Utility Functions
@@ -470,5 +480,104 @@ if (clearUrlAllBtn) {
         urlInput.value = '';
         urlOutput.value = '';
         urlInput.focus();
+    });
+}
+
+// ============================================
+// JSON Format Tool Functions
+// ============================================
+
+const jsonInput = document.getElementById('json-input');
+const jsonOutput = document.getElementById('json-output');
+const jsonFormatBtn = document.getElementById('json-format-btn');
+const jsonCompressBtn = document.getElementById('json-compress-btn');
+const jsonCopyBtn = document.getElementById('json-copy-btn');
+
+/**
+ * Format JSON string with indentation
+ * @param {string} jsonStr - The JSON string to format
+ * @returns {object} - {success: boolean, result: string, error: string}
+ */
+function formatJson(jsonStr) {
+    try {
+        if (!jsonStr || !jsonStr.trim()) {
+            return {success: false, result: '', error: '請輸入 JSON 內容'};
+        }
+        
+        const parsed = JSON.parse(jsonStr);
+        const formatted = JSON.stringify(parsed, null, 2);
+        return {success: true, result: formatted, error: ''};
+    } catch (error) {
+        return {success: false, result: '', error: 'JSON 格式錯誤: ' + error.message};
+    }
+}
+
+/**
+ * Compress JSON string (remove unnecessary whitespace)
+ * @param {string} jsonStr - The JSON string to compress
+ * @returns {object} - {success: boolean, result: string, error: string}
+ */
+function compressJson(jsonStr) {
+    try {
+        if (!jsonStr || !jsonStr.trim()) {
+            return {success: false, result: '', error: '請輸入 JSON 內容'};
+        }
+        
+        const parsed = JSON.parse(jsonStr);
+        const compressed = JSON.stringify(parsed);
+        return {success: true, result: compressed, error: ''};
+    } catch (error) {
+        return {success: false, result: '', error: 'JSON 格式錯誤: ' + error.message};
+    }
+}
+
+/**
+ * Display error message in output
+ * @param {string} error - The error message
+ */
+function displayJsonError(error) {
+    jsonOutput.value = '❌ ' + error;
+    jsonOutput.classList.add('error');
+}
+
+/**
+ * Display success message in output
+ * @param {string} result - The result
+ */
+function displayJsonSuccess(result) {
+    jsonOutput.value = result;
+    jsonOutput.classList.remove('error');
+}
+
+// Format button
+if (jsonFormatBtn) {
+    jsonFormatBtn.addEventListener('click', () => {
+        const result = formatJson(jsonInput.value);
+        if (result.success) {
+            displayJsonSuccess(result.result);
+            showNotification('JSON 格式化成功！', 'success');
+        } else {
+            displayJsonError(result.error);
+        }
+    });
+}
+
+// Compress button
+if (jsonCompressBtn) {
+    jsonCompressBtn.addEventListener('click', () => {
+        const result = compressJson(jsonInput.value);
+        if (result.success) {
+            displayJsonSuccess(result.result);
+            showNotification('JSON 壓縮成功！', 'success');
+        } else {
+            displayJsonError(result.error);
+        }
+    });
+}
+
+// Copy button
+if (jsonCopyBtn) {
+    jsonCopyBtn.addEventListener('click', () => {
+        copyToClipboard(jsonOutput.value);
     });
 }

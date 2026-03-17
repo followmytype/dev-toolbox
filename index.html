@@ -17,6 +17,7 @@
             <button class="tab-btn active" data-tab="unicode">Unicode 編碼/解碼</button>
             <button class="tab-btn" data-tab="base64">Base64 編碼/解碼</button>
             <button class="tab-btn" data-tab="urlencode">URL 編碼/解碼</button>
+            <button class="tab-btn" data-tab="json">JSON 格式化</button>
         </nav>
 
         <main>
@@ -162,6 +163,52 @@
                             <li><strong>編碼:</strong> 將文字轉換為 URL 編碼格式（適用於 URL 參數）</li>
                             <li><strong>解碼:</strong> 將 URL 編碼轉換回文字</li>
                             <li>自動雙向轉換，支援中文和特殊字符</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- JSON Format Tool Tab -->
+            <section id="json" class="tab-content">
+                <div class="tool-section">
+                    <div class="tool-header">
+                        <h2>JSON 格式化</h2>
+                        <button id="layout-toggle-btn-json" class="layout-toggle" title="切換佈局">⇄</button>
+                    </div>
+                    
+                    <div class="tool-row">
+                        <div class="input-group">
+                            <label for="json-input">JSON 輸入</label>
+                            <textarea 
+                                id="json-input" 
+                                placeholder="輸入 JSON 資料..." 
+                                rows="10"
+                            ></textarea>
+                        </div>
+
+                        <div class="button-group">
+                            <button id="json-format-btn" class="btn btn-primary">格式化</button>
+                            <button id="json-compress-btn" class="btn btn-secondary">壓縮</button>
+                            <button id="json-copy-btn" class="btn btn-copy">複製結果</button>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="json-output">JSON 輸出</label>
+                            <textarea 
+                                id="json-output" 
+                                placeholder="格式化或壓縮結果會顯示在這裡..." 
+                                rows="10"
+                                readonly
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="info-section">
+                        <h3>使用說明</h3>
+                        <ul>
+                            <li><strong>格式化:</strong> 將 JSON 格式化為易讀的形式（縮進 2 空格）</li>
+                            <li><strong>壓縮:</strong> 將 JSON 壓縮為單行形式</li>
+                            <li>自動驗證 JSON 格式，錯誤會顯示在輸出框</li>
                         </ul>
                     </div>
                 </div>
